@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.autofill.AutofillManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -32,6 +33,11 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
     String [] carparkName = new String[2419];
     String [] hawkerName = new String[100];
     String [] petrolKioskName = new String[185];
+    String text;
+    String [] nothingName;
+    AutoCompleteTextView nothingAC;
+    int loctype = 0;
+    String subject = "";
     //TestingRadioButtons
     /*RadioGroup radioButtons;
     int checked;
@@ -114,7 +120,145 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
                     description.setError("Cannot be empty!");
                 }
                 else {
-                    sendMail();
+                    if (text.trim().equals("Select carpark, petrol kiosk or hawker!")){
+                        Toast.makeText(getApplicationContext(), "Please select carpark, petrol kiosk or hawker above", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        //an issue when the user backs then enters another place
+                        if(loctype == 1){
+                            int cpValid = 0;
+                            int c=0;
+                            Log.d("place", "checkpoint 1");
+                            subject = HDBcarparkAC.getText().toString();
+
+                            if(subject.equals("")){
+                                Log.d("place", "checkpoint 2");
+                                Toast.makeText(getApplicationContext(),"Cannot be empty!",Toast.LENGTH_LONG).show();
+                                HDBcarparkAC.setError("Cannot be empty!");
+
+                            }
+                            else{
+                                Log.d("place", "checkpoint 3");
+                                subject = HDBcarparkAC.getText().toString();
+                                while ((!carparkName[c].equals("Yew Tee Point")) && (cpValid != 1)) {
+                                    cpValid = -1;
+                                    if (subject.trim().toLowerCase().equals(carparkName[c].trim().toLowerCase())) {
+                                        //Toast.makeText(getApplicationContext(), "The carpark is in the database!", Toast.LENGTH_LONG).show();
+                                        Log.d("place", "checkpoint 4");
+                                        cpValid = 1;
+                                    }
+                                    c++;
+                                }
+                                if (subject.trim().toLowerCase().equals("yew tee point")){
+                                    Log.d("place", "checkpoint 5");
+                                    cpValid = 1;
+                                }
+
+
+                                if(cpValid == 1){
+                                    Log.d("place", "checkpoint 6");
+                                    Toast.makeText(getApplicationContext(), "The carpark is in the database!", Toast.LENGTH_LONG).show();
+                                    subject = "Carparks - ".concat(HDBcarparkAC.getText().toString());
+                                    sendMail();
+                                }
+
+                                else if(cpValid == -1){
+                                    Log.d("place", "checkpoint 7");
+                                    Toast.makeText(getApplicationContext(), "ERROR!! LOCATION NOT FOUND IN DATABASE!", Toast.LENGTH_LONG).show();
+                                    HDBcarparkAC.setError("ERROR!! LOCATION NOT FOUND IN DATABASE!");
+                                }
+                            }
+
+                        }
+                        else if (loctype == 2){
+                            int pkValid = 0;
+                            int d=0;
+                            Log.d("place", "checkpoint 1d");
+                            subject = petrolKioskAC.getText().toString();
+
+                            if(subject.equals("")){
+                                Log.d("place", "checkpoint 2d");
+                                Toast.makeText(getApplicationContext(),"Cannot be empty!",Toast.LENGTH_LONG).show();
+                                petrolKioskAC.setError("Cannot be empty!");
+
+                            }
+                            else{
+                                Log.d("place", subject);
+                                subject = petrolKioskAC.getText().toString();
+                                while ((!petrolKioskName[d].equals("Shell Boon Lay")) && (pkValid != 1)) {
+                                    pkValid = -1;
+                                    if (subject.trim().toLowerCase().equals(petrolKioskName[d].trim().toLowerCase())) {
+                                        //Toast.makeText(getApplicationContext(), "The petrol kiosk is in the database!", Toast.LENGTH_LONG).show();
+                                        Log.d("place", "checkpoint 4d");
+                                        pkValid = 1;
+                                    }
+                                    d++;
+                                }
+                                if (subject.trim().toLowerCase().equals("Shell Boon Lay")){
+                                    Log.d("place", "checkpoint 5d");
+                                    pkValid = 1;
+                                }
+
+
+                                if(pkValid == 1){
+                                    Log.d("place", "checkpoint 6d");
+                                    Toast.makeText(getApplicationContext(), "The petrol kiosk is in the database!", Toast.LENGTH_LONG).show();
+                                    subject = "Petrol Kiosk - ".concat(petrolKioskAC.getText().toString());
+                                    sendMail();
+                                }
+
+                                else if(pkValid == -1){
+                                    Log.d("place", "checkpoint 7d");
+                                    Toast.makeText(getApplicationContext(), "ERROR!! LOCATION NOT FOUND IN DATABASE!", Toast.LENGTH_LONG).show();
+                                    petrolKioskAC.setError("ERROR!! LOCATION NOT FOUND IN DATABASE!");
+                                }
+                            }
+                        }
+                        else{
+                            int hcValid = 0;
+                            int e=0;
+                            Log.d("place", "checkpoint 1");
+                            subject = hawkerAC.getText().toString();
+
+                            if(subject.equals("")){
+                                Log.d("place", "checkpoint 2");
+                                Toast.makeText(getApplicationContext(),"Cannot be empty!",Toast.LENGTH_LONG).show();
+                                hawkerAC.setError("Cannot be empty!");
+
+                            }
+                            else{
+                                subject = hawkerAC.getText().toString();
+                                Log.d("place", "checkpoint 3");
+                                while ((!hawkerName[e].equals("null")) && (hcValid != 1)) {
+                                    hcValid = -1;
+                                    if (subject.trim().toLowerCase().equals(hawkerName[e].trim().toLowerCase())) {
+                                        //Toast.makeText(getApplicationContext(), "The hawker is in the database!", Toast.LENGTH_LONG).show();
+                                        Log.d("place", "checkpoint 4");
+                                        hcValid = 1;
+                                    }
+                                    e++;
+                                }
+                                if (subject.trim().toLowerCase().equals("null")){
+                                    Log.d("place", "checkpoint 5");
+                                    hcValid = 1;
+                                }
+
+
+                                if(hcValid == 1){
+                                    Log.d("place", "checkpoint 6");
+                                    Toast.makeText(getApplicationContext(), "The hawker is in the database!", Toast.LENGTH_LONG).show();
+                                    subject = "Hawker = ".concat(hawkerAC.getText().toString());
+                                    sendMail();
+                                }
+
+                                else if(hcValid == -1){
+                                    Log.d("place", "checkpoint 7");
+                                    Toast.makeText(getApplicationContext(), "ERROR!! LOCATION NOT FOUND IN DATABASE!", Toast.LENGTH_LONG).show();
+                                    hawkerAC.setError("ERROR!! LOCATION NOT FOUND IN DATABASE!");
+                                }
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -124,9 +268,9 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
         String recipientList = emailaddress.getText().toString();
         String[] recipients = recipientList.split(",");
         String message = description.getText().toString();
-        String subject = HDBcarparkAC.getText().toString();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+        Log.d("subject", subject);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
 
@@ -174,9 +318,7 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
                 carparkName[i]= tokens[0];
                 Log.d("place = ", carparkName[i]);
                 i++;
-
             }
-
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -198,9 +340,7 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
                 petrolKioskName[i]= tokens[0];
                 Log.d("place = ", petrolKioskName[i]);
                 i++;
-
             }
-
         }  catch (IOException e) {
             e.printStackTrace();
         }
@@ -208,22 +348,21 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        int z =0;
-        int y =0;
-        int x = 0;
-        String text = adapterView.getItemAtPosition(i).toString();
-        Log.d("place = ",text);
+        text = adapterView.getItemAtPosition(i).toString();
         if (text.trim().equals("Carparks")){
             Log.d("place = ","we here");
             HDBcarparkAC = (AutoCompleteTextView) findViewById(R.id.place);
+            loctype = 1;
             //using strings.xml
             //place = getResources().getStringArray(R.array.HDB_carparks);
             readHDBCarparkPlaces();
             readMallCarparkPlaces();
             ArrayAdapter<String> adapterC = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, carparkName);
             HDBcarparkAC.setAdapter(adapterC);
-            /*subject = HDBcarparkAC.getText().toString();
-            if(subject.equals("")){
+            subject = HDBcarparkAC.getText().toString();
+
+
+            /*if(subject.equals("")){
                 Toast.makeText(getApplicationContext(),"Cannot be empty!",Toast.LENGTH_LONG).show();
 
             }*/
@@ -235,13 +374,15 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
             }*/
         }
         else if (text.trim().equals("Petrol Kiosk")){
+            loctype = 2;
             petrolKioskAC = (AutoCompleteTextView) findViewById(R.id.place);
             readPetrolKioskPlaces();
             ArrayAdapter<String> adapterPK = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, petrolKioskName);
             petrolKioskAC.setAdapter(adapterPK);
-            //subject = petrolKioskAC.getText().toString();
+            subject = petrolKioskAC.getText().toString();
         }
         else if (text.trim().equals("Hawker")){
+            loctype = 3;
             //no data yet...
             /*hawkerAC = (AutoCompleteTextView) findViewById(R.id.place);
             readHawkerPlaces();
@@ -250,9 +391,16 @@ public class existingForm extends AppCompatActivity implements AdapterView.OnIte
             subject = hawkerAC.getText().toString();*/
         }
         else {
-            /*if (subject.equals("")) {
-                Toast.makeText(getApplicationContext(), "Feedback on any carpark, petrol kiosk or hawker!", Toast.LENGTH_LONG).show();
-            }*/
+            Toast.makeText(getApplicationContext(), "Feedback on any carpark, petrol kiosk or hawker!", Toast.LENGTH_LONG).show();
+            if (text.trim().equals("Select carpark, petrol kiosk or hawker!")) {
+                nothingAC = (AutoCompleteTextView) findViewById(R.id.place);
+                nothingName =  getResources().getStringArray(R.array.nothing);
+                ArrayAdapter<String> adapterN = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nothingName);
+                nothingAC.setAdapter(adapterN);
+                subject = nothingAC.getText().toString();
+            }
+            else{
+            }
         }
     }
 
