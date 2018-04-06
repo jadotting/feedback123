@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jadstudios.feedback.MainActivity">
+
+
+    <Button
+        android:id="@+id/carparkFeedbackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/hawkerFeedbackButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="63dp"
+        android:text="Feedback for carparks" />
+
+    <Button
+        android:id="@+id/hawkerFeedbackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Feedback for hawker centers" />
+
+    <Button
+        android:id="@+id/petrolKioskFeedbackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hawkerFeedbackButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp"
+        android:text="Feedback for petrol kiosk" />
+
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Feedback</string>
+    <string-array name="HDB_carparks">
+        <item> Blk 291 </item>
+    </string-array>
+    <string-array name="spinnerForForms">
+        <item>Select carpark, petrol kiosk or hawker!</item>
+        <item>Carparks</item>
+        <item>Petrol Kiosk</item>
+        <item>Hawker</item>
+    </string-array>
+</resources>
